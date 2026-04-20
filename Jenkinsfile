@@ -29,7 +29,7 @@ pipeline {
                 ]]) {
                     sh '''
                     aws ecr get-login-password --region $AWS_REGION | \
-                    docker login --username AWS --password-stdin $ECR_REPO
+                    docker login --username AWS --password-stdin 988698481528.dkr.ecr.us-east-1.amazonaws.com
                     '''
                 }
             }
@@ -45,24 +45,16 @@ pipeline {
             steps {
                 sshagent(['ec2-ssh-key']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@$EC2_IP << EOF
+ssh -o StrictHostKeyChecking=no ubuntu@$EC2_IP <<EOF
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988698481528.dkr.ecr.us-east-1.amazonaws.com
 
-                    # Login to ECR inside EC2
-                    aws ecr get-login-password --region us-east-1 | \
-                    docker login --username AWS --password-stdin 988698481528.dkr.ecr.us-east-1.amazonaws.com
+docker pull 988698481528.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
 
-                    # Pull latest image
-                    docker pull 988698481528.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+docker stop my-app || true
+docker rm my-app || true
 
-                    # Stop old container
-                    docker stop my-app || true
-                    docker rm my-app || true
-
-                    # Run new container
-                    docker run -d -p 80:8081 --name my-app \
-                    988698481528.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
-
-                    EOF
+docker run -d -p 80:8081 --name my-app 988698481528.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+EOF
                     '''
                 }
             }
