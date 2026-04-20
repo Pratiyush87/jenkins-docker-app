@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'ap-south-1'
-        ECR_REPO = '988698481528.dkr.ecr.ap-south-1.amazonaws.com/jenkins-docker-app'
-        IMAGE_TAG = 'latest'
-        EC2_IP = '52.201.87.198'
-    }
+    AWS_REGION = 'us-east-1'
+    ECR_REPO = '988698481528.dkr.ecr.us-east-1.amazonaws.com/my-app'
+    IMAGE_TAG = 'latest'
+    EC2_IP = '52.201.87.198'
+}
 
     stages {
 
