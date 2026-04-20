@@ -10,12 +10,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/Pratiyush87/jenkins-docker-app.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t my-app .'
