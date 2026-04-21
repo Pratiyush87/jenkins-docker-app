@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION = "us-east-1"
         ECR_REPO = "988698481528.dkr.ecr.us-east-1.amazonaws.com/my-app"
-        EC2_IP = "52.201.87.198"
+        EC2_IP = "52.202.167.175"
     }
 
     stages {
